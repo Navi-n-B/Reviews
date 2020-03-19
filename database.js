@@ -72,23 +72,24 @@ var OwnerReply = seqDb.define('ownerReply', {
 	date: Sequelize.DATE
 });
 
-seqDbCreate
-	.authenticate()
-	.then(() => {
-		console.log('seqDbCreate connection has been established.')
-		return seqDbCreate.query('DROP DATABASE IF EXISTS bnbReviews')
-	})
-	.then(() => {
-		return seqDbCreate.query('CREATE DATABASE IF NOT EXISTS bnbReviews')
-	})
-	.then(() => {
-		return seqDb.authenticate()
-	})
-	.then(() => {
-		seqDb.sync({ force: true })
-	})
-	.catch((err) => console.log('Error initializing- ', err))
 
+const createAndConnectDb = () => {
+	return seqDbCreate
+		.authenticate()
+		.then(() => {
+			console.log('seqDbCreate connection has been established.')
+			return seqDbCreate.query('DROP DATABASE IF EXISTS bnbReviews')
+		})
+		.then(() => {
+			return seqDbCreate.query('CREATE DATABASE IF NOT EXISTS bnbReviews')
+		})
+		.then(() => {
+			return seqDb.authenticate()
+		})
+		.then(() => {
+			return seqDb.sync({ force: true })
+		})
+		.catch((err) => console.log('Error initializing- ', err))
+}
 
-
-
+module.exports = { User, Listing, Review, OwnerReply, seqDb, createAndConnectDb }
