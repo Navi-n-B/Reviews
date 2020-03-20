@@ -1,39 +1,61 @@
 var { User, Listing, Review, OwnerReply, seqDb, createAndConnectDb } = require('./database.js');
-// var { seedDb } = require('./seed.js')
+var { seedDb } = require('./seed.js')
 var express = require('express')
 const app = express();
 const port = 3001;
+const path = require('path')
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 createAndConnectDb()
 	.then(() => {
-		// seedDb()
+		seedDb()
 	})
 
-app.get('/', (req, res) => {
-	seqDb.query('SELECT * FROM users')
-		.then((rows) => {
-			return rows.toJSON()
-		})
+//SELECT AVG(reviews.review_stat_1), AVG(reviews.review_stat_2), COUNT(*) FROM reviews WHERE reviews.listing_id = 2;
+
+//SELECT AVG(resources.sort_order) AS sort_order_avg, AVG(resources.sort_order) as sort_order_avg_2, COUNT(*) as total_count FROM resources;
+
+//AVG (column + column) / 2 as review_avg
+
+app.get('/', function (req, res) {
+	res.redirect('index.html');
+});
+
+app.get('/reviews/:listingId', (req, res) => {
+	var listingId = req.params.listingId;
+	seqDb.query(`SELECT * from reviews WHERE listing = ${listingId}`)
 		.then((data) => {
-			res.send(data)
+			res.send(data[0])
 		})
 })
 
-// componentDidMount() {
-// 	//blocked by cors
-// 	fetch('http://localhost:3000/api/blogs')
-// 		//if allowed through- reassign state.posts to the result of the fetch requests
-// 		.then((res) => {
-// 			return res.json()
-// 		})
-// 		.then((data) => {
-// 			console.log(1242, data)
-// 			this.setState({ posts: data });
-// 		})
-// 		.catch((err) => console.log(err));
-// }
+app.get(`/reviews/scores/:listingId`, (req, res) => {
+	var listingId = req.params.listingId;
+	seqDb.query(`SELECT AVG(ratingCheckIn) as ratingCheckIn, AVG(ratingAccuracy) as ratingAccuracy, AVG(ratingCleanliness) as ratingCleanliness, AVG(ratingCommunication) as ratingCommunication, AVG(ratingLocation) as ratingLocation, AVG(ratingValue) as ratingValue, AVG(ratingCheckIn + ratingAccuracy+ratingCleanliness+ratingCommunication+ratingLocation+ratingValue) / 6 as totalScore, COUNT(*) as numberOfReviews FROM reviews WHERE listing = ${listingId}`)
+		.then((data) => {
+			res.send(data[0][0])
+		})
+})
+
+app.get('/reviews/search/:listingId/:searchQuery', (req, res) => {
+	var searchQuery = req.params.searchQuery;
+	var listingId = req.params.listingId;
+	console.log(searchQuery)
+	seqDb.query(`SELECT * from reviews WHERE reviewText LIKE '%${searchQuery}%' AND listing =  ${listingId}`)
+		.then((filteredReviews) => {
+			res.send(filteredReviews)
+		})
+})
 
 
 app.listen(port, () => {
 	console.log('listening on port: ', port)
 })
+
+
+
+//SERVING INDEX.HTML
+		// write react app compile it
+		// use create react app tool and when npm start start a development server and hosts index.html
+		//

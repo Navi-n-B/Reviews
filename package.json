@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "seed": "node seed.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,9 +19,12 @@
   },
   "homepage": "https://github.com/brice-klein/play-ground#readme",
   "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2",
     "express": "^4.17.1",
     "faker": "^4.1.0",
     "mariadb": "^2.2.0",
+    "path": "^0.12.7",
     "sequelize": "^5.21.5"
   }
 }
