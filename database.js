@@ -1,11 +1,13 @@
 var Sequelize = require('sequelize')
 
-const seqDbCreate = new Sequelize('', 'root', 'M1tim6!17b', {
+const password = 'Password!';
+
+const seqDbCreate = new Sequelize('', 'root', password, {
 	dialect: 'mariadb',
 	port: 3306
 });
 
-const seqDb = new Sequelize('bnbReviews', 'root', 'M1tim6!17b', {
+const seqDb = new Sequelize('bnbReviews', 'root', password, {
 	dialect: 'mariadb',
 	port: 3306
 })
