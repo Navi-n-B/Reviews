@@ -22,9 +22,28 @@ app.get('/', function (req, res) {
 	res.redirect('index.html');
 });
 
+// `SELECT * FROM reviews JOIN users ON reviews.createdBy = users.id WHERE listing = ${listingId}`
+
 app.get('/reviews/:listingId', (req, res) => {
 	var listingId = req.params.listingId;
-	seqDb.query(`SELECT * from reviews WHERE listing = ${listingId}`)
+	seqDb.query(`SELECT *,
+	reviews.id AS reviewId, reviews.date AS reviewDate,
+
+	users1.id AS userId, users1.firstName AS userFirstName, users1.lastName AS userLastName, users1
+
+	users2.id AS ownerId, users2.firstName AS ownerFirstName, users2.lastName AS ownerLastName, users2.profilePicUrl AS ownerProfilePicUrl,
+
+	ownerReplies.id AS ownerReplyId, ownerReplies.date AS ownerReplyDate
+
+	FROM reviews
+
+	LEFT JOIN users AS users1 ON reviews.createdBy = users1.id
+
+	LEFT JOIN ownerReplies ON reviews.id = ownerReplies.reviewId
+
+	LEFT JOIN users AS users2 ON ownerReplies.createdBy = users2.id
+
+	WHERE listing= ${listingId}`)
 		.then((data) => {
 			res.send(data[0])
 		})
@@ -48,6 +67,13 @@ app.get('/reviews/search/:listingId/:searchQuery', (req, res) => {
 		})
 })
 
+app.get('/reviews/join/listing/:listingId', (req, res) => {
+	var listingId = req.params.listingId;
+	seqDb.query(`SELECT * FROM reviews JOIN users ON reviews.createdBy = users.id WHERE listing = ${listingId}`)
+		.then((filteredResults) => {
+			res.send(filteredResults)
+		})
+})
 
 app.listen(port, () => {
 	console.log('listening on port: ', port)
