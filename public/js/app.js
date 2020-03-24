@@ -55,11 +55,9 @@ var App = function (_React$Component) {
           null,
           React.createElement(ReviewOverview, { scores: this.state.reviewScores })
         ),
-        React.createElement(
-          'div',
-          null,
-          React.createElement(ReviewFeed, { reviews: this.state.reviewPosts })
-        )
+        this.state.reviewPosts.map(function (review) {
+          return React.createElement(Review, { review: review });
+        })
       );
     }
   }]);

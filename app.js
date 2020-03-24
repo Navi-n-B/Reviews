@@ -29,7 +29,7 @@ app.get('/reviews/:listingId', (req, res) => {
 	seqDb.query(`SELECT *,
 	reviews.id AS reviewId, reviews.date AS reviewDate,
 
-	users1.id AS userId, users1.firstName AS userFirstName, users1.lastName AS userLastName, users1
+	users1.id AS userId, users1.firstName AS userFirstName, users1.lastName AS userLastName, users1.profilePicUrl AS userProfilePicUrl,
 
 	users2.id AS ownerId, users2.firstName AS ownerFirstName, users2.lastName AS ownerLastName, users2.profilePicUrl AS ownerProfilePicUrl,
 

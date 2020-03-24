@@ -38,9 +38,12 @@ class App extends React.Component {
         <div>
           <ReviewOverview scores={this.state.reviewScores} />
         </div>
-        <div>
+        {this.state.reviewPosts.map((review) => {
+          return <Review review={review} />
+        })}
+        {/* <div>
           <ReviewFeed reviews={this.state.reviewPosts} />
-        </div>
+        </div> */}
       </div>
     )
 

@@ -14,6 +14,14 @@ const e = React.createElement;
 
 const ReviewTermScore = (props) => {
   return (
-    <div>{props.term} {props.score}</div>
+    <div id='review-term-block'>
+      <div id='slim-block'>
+        <div id='review-term'>{props.term}</div>
+        <div id='bar-and-score'>
+          <div id='outer-bar'><div id='inner-bar'></div></div>
+          <div id='term-score'>{props.score}</div>
+        </div>
+      </div>
+    </div>
   )
 }

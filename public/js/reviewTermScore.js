@@ -16,9 +16,29 @@ var e = React.createElement;
 var ReviewTermScore = function ReviewTermScore(props) {
   return React.createElement(
     'div',
-    null,
-    props.term,
-    ' ',
-    props.score
+    { id: 'review-term-block' },
+    React.createElement(
+      'div',
+      { id: 'slim-block' },
+      React.createElement(
+        'div',
+        { id: 'review-term' },
+        props.term
+      ),
+      React.createElement(
+        'div',
+        { id: 'bar-and-score' },
+        React.createElement(
+          'div',
+          { id: 'outer-bar' },
+          React.createElement('div', { id: 'inner-bar' })
+        ),
+        React.createElement(
+          'div',
+          { id: 'term-score' },
+          props.score
+        )
+      )
+    )
   );
 };

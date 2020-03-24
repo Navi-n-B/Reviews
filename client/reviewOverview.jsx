@@ -33,10 +33,13 @@ const ReviewOverview = (props) => {
   console.log(termScores)
   return (
     <div>
-      <div>
-        {props.scores.totalScore} {props.scores.numberOfReviews}
+      <div id='star-and-totals'>
+        <div>*</div>
+        <div id='score-and-review-count'>
+          <h1>{props.scores.totalScore} ({props.scores.numberOfReviews} reviews)</h1>
+        </div>
       </div>
-      <div>
+      <div id='review-terms-scores'>
         {termScores.map((score, index) => {
           return <ReviewTermScore score={score} term={terms[index]} />
         })}

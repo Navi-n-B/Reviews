@@ -35,14 +35,28 @@ var ReviewOverview = function ReviewOverview(props) {
     null,
     React.createElement(
       'div',
-      null,
-      props.scores.totalScore,
-      ' ',
-      props.scores.numberOfReviews
+      { id: 'star-and-totals' },
+      React.createElement(
+        'div',
+        null,
+        '*'
+      ),
+      React.createElement(
+        'div',
+        { id: 'score-and-review-count' },
+        React.createElement(
+          'h1',
+          null,
+          props.scores.totalScore,
+          ' (',
+          props.scores.numberOfReviews,
+          ' reviews)'
+        )
+      )
     ),
     React.createElement(
       'div',
-      null,
+      { id: 'review-terms-scores' },
       termScores.map(function (score, index) {
         return React.createElement(ReviewTermScore, { score: score, term: terms[index] });
       })
