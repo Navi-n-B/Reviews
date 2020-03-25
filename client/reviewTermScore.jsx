@@ -2,7 +2,7 @@
 const useState = React.useState;
 const useEffect = React.useEffect;
 const e = React.createElement;
-
+import React from 'react';
 // class ReviewTermScore extends React.Component {
 //   constructor(props) {
 //     super(props)
@@ -25,3 +25,5 @@ const ReviewTermScore = (props) => {
     </div>
   )
 }
+
+export default ReviewTermScore;

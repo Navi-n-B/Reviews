@@ -4,12 +4,15 @@ const password = 'Password!';
 
 const seqDbCreate = new Sequelize('', 'admin', password, {
 	dialect: 'mariadb',
-	port: 3306
+	port: 3306,
+	host: '127.0.0.1'
 });
+
 
 const seqDb = new Sequelize('bnbReviews', 'admin', password, {
 	dialect: 'mariadb',
-	port: 3306
+	port: 3306,
+	host: '127.0.0.1'
 })
 
 var User = seqDb.define('user', {

@@ -2,6 +2,8 @@
 const useState = React.useState;
 const useEffect = React.useEffect;
 const e = React.createElement;
+import React from 'react';
+import ReviewTermScore from './reviewTermScore.jsx'
 
 
 // class ReviewOverview extends React.Component {
@@ -47,3 +49,5 @@ const ReviewOverview = (props) => {
     </div>
   )
 }
+
+export default ReviewOverview;

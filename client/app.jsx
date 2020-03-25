@@ -2,7 +2,10 @@
 const useState = React.useState;
 const useEffect = React.useEffect;
 const e = React.createElement;
-
+import React from 'react';
+import ReviewOverview from './reviewOverview.jsx';
+import ReviewFeed from './reviewFeed.jsx';
+import Review from './review.jsx';
 
 
 class App extends React.Component {
@@ -12,17 +15,20 @@ class App extends React.Component {
       reviewScores: {},
       reviewPosts: []
     }
+    this.id = location.pathname.split('/reviews/')[1];
+    console.log('Url splitter id- ', this.id)
   }
 
+
   componentDidMount() {
-    fetch(`/reviews/3`)
+    fetch(`/api/reviews/${this.id}`)
       .then((res) => {
         return res.json()
       })
       .then((reviews) => {
         this.setState({ reviewPosts: reviews })
       })
-    fetch('/reviews/scores/3')
+    fetch(`/api/reviews/scores/${this.id}`)
       .then((res) => {
         return res.json()
       })
@@ -60,5 +66,6 @@ class App extends React.Component {
 </div>
 </div> */}
 
-const domContainer = document.querySelector('#app');
-ReactDOM.render(e(App), domContainer);
+// const domContainer = document.querySelector('#app');
+// ReactDOM.render(e(App), domContainer);
+export default App;

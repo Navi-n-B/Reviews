@@ -2,6 +2,8 @@
 const useState = React.useState;
 const useEffect = React.useEffect;
 const e = React.createElement;
+import React from 'react';
+import Review from './review.jsx';
 
 
 const ReviewFeed = (props) => {
@@ -14,3 +16,5 @@ const ReviewFeed = (props) => {
     </div>
   )
 }
+
+export default ReviewFeed;

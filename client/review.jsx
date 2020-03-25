@@ -2,6 +2,7 @@
 const useState = React.useState;
 const useEffect = React.useEffect;
 const e = React.createElement;
+import React from 'react';
 
 const Review = (props) => {
   console.log(props)
@@ -16,3 +17,5 @@ const Review = (props) => {
     </div>
   )
 }
+
+export default Review;

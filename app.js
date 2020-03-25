@@ -5,27 +5,20 @@ const app = express();
 const port = 3001;
 const path = require('path')
 
-app.use(express.static(path.join(__dirname, 'public')));
+const _dirname = '../dist';
 
 createAndConnectDb()
 	.then(() => {
 		seedDb()
 	})
 
-//SELECT AVG(reviews.review_stat_1), AVG(reviews.review_stat_2), COUNT(*) FROM reviews WHERE reviews.listing_id = 2;
+app.use('/reviews/:listingId', express.static(path.join(__dirname, 'dist')));
 
-//SELECT AVG(resources.sort_order) AS sort_order_avg, AVG(resources.sort_order) as sort_order_avg_2, COUNT(*) as total_count FROM resources;
+// app.use('/', express.static(_dirname));
 
-//AVG (column + column) / 2 as review_avg
-
-app.get('/', function (req, res) {
-	res.redirect('index.html');
-});
-
-// `SELECT * FROM reviews JOIN users ON reviews.createdBy = users.id WHERE listing = ${listingId}`
-
-app.get('/reviews/:listingId', (req, res) => {
+app.get('/api/reviews/:listingId', (req, res) => {
 	var listingId = req.params.listingId;
+	console.log(21, listingId)
 	seqDb.query(`SELECT *,
 	reviews.id AS reviewId, reviews.date AS reviewDate,
 
@@ -49,7 +42,7 @@ app.get('/reviews/:listingId', (req, res) => {
 		})
 })
 
-app.get(`/reviews/scores/:listingId`, (req, res) => {
+app.get(`/api/reviews/scores/:listingId`, (req, res) => {
 	var listingId = req.params.listingId;
 	seqDb.query(`SELECT AVG(ratingCheckIn) as ratingCheckIn, AVG(ratingAccuracy) as ratingAccuracy, AVG(ratingCleanliness) as ratingCleanliness, AVG(ratingCommunication) as ratingCommunication, AVG(ratingLocation) as ratingLocation, AVG(ratingValue) as ratingValue, AVG(ratingCheckIn + ratingAccuracy+ratingCleanliness+ratingCommunication+ratingLocation+ratingValue) / 6 as totalScore, COUNT(*) as numberOfReviews FROM reviews WHERE listing = ${listingId}`)
 		.then((data) => {
@@ -57,7 +50,7 @@ app.get(`/reviews/scores/:listingId`, (req, res) => {
 		})
 })
 
-app.get('/reviews/search/:listingId/:searchQuery', (req, res) => {
+app.get('/api/reviews/search/:listingId/:searchQuery', (req, res) => {
 	var searchQuery = req.params.searchQuery;
 	var listingId = req.params.listingId;
 	console.log(searchQuery)
@@ -66,19 +59,27 @@ app.get('/reviews/search/:listingId/:searchQuery', (req, res) => {
 			res.send(filteredReviews)
 		})
 })
-
-app.get('/reviews/join/listing/:listingId', (req, res) => {
-	var listingId = req.params.listingId;
-	seqDb.query(`SELECT * FROM reviews JOIN users ON reviews.createdBy = users.id WHERE listing = ${listingId}`)
-		.then((filteredResults) => {
-			res.send(filteredResults)
-		})
-})
-
 app.listen(port, () => {
 	console.log('listening on port: ', port)
 })
 
+
+
+//SELECT AVG(reviews.review_stat_1), AVG(reviews.review_stat_2), COUNT(*) FROM reviews WHERE reviews.listing_id = 2;
+
+//SELECT AVG(resources.sort_order) AS sort_order_avg, AVG(resources.sort_order) as sort_order_avg_2, COUNT(*) as total_count FROM resources;
+
+//AVG (column + column) / 2 as review_avg
+
+// `SELECT * FROM reviews JOIN users ON reviews.createdBy = users.id WHERE listing = ${listingId}`
+
+// app.get('/reviews/join/listing/:listingId', (req, res) => {
+// 	var listingId = req.params.listingId;
+// 	seqDb.query(`SELECT * FROM reviews JOIN users ON reviews.createdBy = users.id WHERE listing = ${listingId}`)
+// 		.then((filteredResults) => {
+// 			res.send(filteredResults)
+// 		})
+// })
 
 
 //SERVING INDEX.HTML
