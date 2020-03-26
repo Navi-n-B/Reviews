@@ -16,17 +16,20 @@ class App extends React.Component {
       reviewPosts: []
     }
     this.id = location.pathname.split('/reviews/')[1];
-    console.log('Url splitter id- ', this.id)
   }
 
 
   componentDidMount() {
+    console.log(24, 'app component mounted')
     fetch(`/api/reviews/${this.id}`)
       .then((res) => {
         return res.json()
       })
       .then((reviews) => {
         this.setState({ reviewPosts: reviews })
+      })
+      .catch((err) => {
+        res.status(500)
       })
     fetch(`/api/reviews/scores/${this.id}`)
       .then((res) => {
@@ -36,6 +39,9 @@ class App extends React.Component {
         this.setState({ reviewScores: scores })
         console.log(this.state)
       })
+      .catch((err) => {
+        res.status(500)
+      })
   }
 
   render() {
@@ -44,9 +50,11 @@ class App extends React.Component {
         <div>
           <ReviewOverview scores={this.state.reviewScores} />
         </div>
-        {this.state.reviewPosts.map((review) => {
-          return <Review review={review} />
-        })}
+        <div id='review-feed'>
+          {this.state.reviewPosts.map((review) => {
+            return <Review review={review} />
+          })}
+        </div>
         {/* <div>
           <ReviewFeed reviews={this.state.reviewPosts} />
         </div> */}

@@ -11,10 +11,11 @@ createAndConnectDb()
 	.then(() => {
 		seedDb()
 	})
+	.catch((err) => {
+		res.status(500)
+	})
 
 app.use('/reviews/:listingId', express.static(path.join(__dirname, 'dist')));
-
-// app.use('/', express.static(_dirname));
 
 app.get('/api/reviews/:listingId', (req, res) => {
 	var listingId = req.params.listingId;
@@ -40,6 +41,9 @@ app.get('/api/reviews/:listingId', (req, res) => {
 		.then((data) => {
 			res.send(data[0])
 		})
+		.catch((err) => {
+			res.status(500)
+		})
 })
 
 app.get(`/api/reviews/scores/:listingId`, (req, res) => {
@@ -47,6 +51,9 @@ app.get(`/api/reviews/scores/:listingId`, (req, res) => {
 	seqDb.query(`SELECT AVG(ratingCheckIn) as ratingCheckIn, AVG(ratingAccuracy) as ratingAccuracy, AVG(ratingCleanliness) as ratingCleanliness, AVG(ratingCommunication) as ratingCommunication, AVG(ratingLocation) as ratingLocation, AVG(ratingValue) as ratingValue, AVG(ratingCheckIn + ratingAccuracy+ratingCleanliness+ratingCommunication+ratingLocation+ratingValue) / 6 as totalScore, COUNT(*) as numberOfReviews FROM reviews WHERE listing = ${listingId}`)
 		.then((data) => {
 			res.send(data[0][0])
+		})
+		.catch((err) => {
+			res.status(500)
 		})
 })
 
@@ -58,31 +65,10 @@ app.get('/api/reviews/search/:listingId/:searchQuery', (req, res) => {
 		.then((filteredReviews) => {
 			res.send(filteredReviews)
 		})
+		.catch((err) => {
+			res.status(500)
+		})
 })
 app.listen(port, () => {
 	console.log('listening on port: ', port)
 })
-
-
-
-//SELECT AVG(reviews.review_stat_1), AVG(reviews.review_stat_2), COUNT(*) FROM reviews WHERE reviews.listing_id = 2;
-
-//SELECT AVG(resources.sort_order) AS sort_order_avg, AVG(resources.sort_order) as sort_order_avg_2, COUNT(*) as total_count FROM resources;
-
-//AVG (column + column) / 2 as review_avg
-
-// `SELECT * FROM reviews JOIN users ON reviews.createdBy = users.id WHERE listing = ${listingId}`
-
-// app.get('/reviews/join/listing/:listingId', (req, res) => {
-// 	var listingId = req.params.listingId;
-// 	seqDb.query(`SELECT * FROM reviews JOIN users ON reviews.createdBy = users.id WHERE listing = ${listingId}`)
-// 		.then((filteredResults) => {
-// 			res.send(filteredResults)
-// 		})
-// })
-
-
-//SERVING INDEX.HTML
-		// write react app compile it
-		// use create react app tool and when npm start start a development server and hosts index.html
-		//
