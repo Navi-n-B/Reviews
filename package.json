@@ -1,0 +1,43 @@
+{
+  "name": "remote",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "seed": "node seed.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack -d --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brice-klein/play-ground.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brice-klein/play-ground/issues"
+  },
+  "homepage": "https://github.com/brice-klein/play-ground#readme",
+  "dependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-react": "^7.9.4",
+    "babel-loader": "^8.1.0",
+    "babel-preset-react-app": "^3.1.2",
+    "express": "^4.17.1",
+    "faker": "^4.1.0",
+    "is-glob": "^4.0.1",
+    "lodash": "^4.17.15",
+    "mariadb": "^2.2.0",
+    "moment": "^2.24.0",
+    "path": "^0.12.7",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "sequelize": "^5.21.5",
+    "webpack-cli": "^3.3.11"
+  },
+  "devDependencies": {
+    "webpack": "^4.42.1"
+  }
+}
