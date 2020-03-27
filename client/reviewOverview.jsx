@@ -15,7 +15,7 @@ const ReviewOverview = (props) => {
       <div id='star-and-totals'>
         <div id='star-img'>&#9733;</div>
         <div id='score-and-review-count'>
-          <h1>{props.scores.totalScore} ({props.scores.numberOfReviews} reviews)</h1>
+          <h1>{Number(props.scores.totalScore).toFixed(2)} ({props.scores.numberOfReviews} reviews)</h1>
         </div>
       </div>
       <div id='review-terms-scores'>

@@ -16,12 +16,10 @@ class App extends React.Component {
       reviewPosts: []
     }
     this.id = location.pathname.split('/listing/')[1] || 1;
-    console.log(this.id)
   }
 
 
   componentDidMount() {
-    console.log(24, 'app component mounted')
     fetch(`http://localhost:3001/api/reviews/${this.id}`)
       .then((res) => {
         return res.json()
