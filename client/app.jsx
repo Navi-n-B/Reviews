@@ -15,13 +15,14 @@ class App extends React.Component {
       reviewScores: {},
       reviewPosts: []
     }
-    this.id = location.pathname.split('/reviews/')[1];
+    this.id = location.pathname.split('/listing/')[1] || 1;
+    console.log(this.id)
   }
 
 
   componentDidMount() {
     console.log(24, 'app component mounted')
-    fetch(`/api/reviews/${this.id}`)
+    fetch(`http://localhost:3001/api/reviews/${this.id}`)
       .then((res) => {
         return res.json()
       })
@@ -31,7 +32,7 @@ class App extends React.Component {
       .catch((err) => {
         res.status(500)
       })
-    fetch(`/api/reviews/scores/${this.id}`)
+    fetch(`http://localhost:3001/api/reviews/scores/${this.id}`)
       .then((res) => {
         return res.json()
       })
