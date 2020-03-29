@@ -2,19 +2,21 @@
   padding-left: 40px;
   padding-right: 40px;
 }
-#star-and-totals {
-  /* display: table; */
-  width: 100%;
-  font-size: 1em;
-}
 h1 {
   font-size: 1.6em;
+}
+#star-and-totals {
+  box-sizing: border-box;
+  height: auto;
+  width: 100%;
+  font-size: 1em;
 }
 #score-and-review-count {
   display: inline-block;
   width: 40%;
 }
 #star-img{
+  box-sizing: border-box;
   font-size: 25px;
   color: red;
   display: inline-block;

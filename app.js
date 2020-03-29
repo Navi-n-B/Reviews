@@ -1,6 +1,7 @@
-var { User, Listing, Review, OwnerReply, seqDb, createAndConnectDb } = require('./database.js');
-var { seedDb } = require('./seed.js')
-var express = require('express')
+const { User, Listing, Review, OwnerReply, seqDb, createAndConnectDb } = require('./database.js');
+const { seedDb } = require('./seed.js')
+const express = require('express')
+const cors = require('cors')
 const app = express();
 const port = 3001;
 const path = require('path')
@@ -15,11 +16,7 @@ createAndConnectDb()
 		res.status(500)
 	})
 
-app.use((req, res, next) => {
-	res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-	next();
-});
+app.use(cors())
 
 app.use('/reviews/:listingId', express.static(path.join(__dirname, 'dist')));
 
@@ -27,7 +24,6 @@ app.use('/dist', express.static(path.join(__dirname, 'dist')));
 
 app.get('/api/reviews/:listingId', (req, res) => {
 	var listingId = req.params.listingId;
-	console.log(21, listingId)
 	seqDb.query(`SELECT *,
 	reviews.id AS reviewId, reviews.date AS reviewDate,
 
@@ -68,7 +64,6 @@ app.get(`/api/reviews/scores/:listingId`, (req, res) => {
 app.get('/api/reviews/search/:listingId/:searchQuery', (req, res) => {
 	var searchQuery = req.params.searchQuery;
 	var listingId = req.params.listingId;
-	console.log(searchQuery)
 	seqDb.query(`SELECT * from reviews WHERE reviewText LIKE '%${searchQuery}%' AND listing =  ${listingId}`)
 		.then((filteredReviews) => {
 			res.send(filteredReviews)
