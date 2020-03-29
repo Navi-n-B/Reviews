@@ -45,8 +45,8 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <div>
+      <div id="reviews-main">
+        <div id="reviews-overview-container">
           <ReviewOverview scores={this.state.reviewScores} />
         </div>
         <div id='review-feed'>
