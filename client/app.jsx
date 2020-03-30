@@ -15,7 +15,8 @@ class App extends React.Component {
       reviewScores: {},
       reviewPosts: []
     }
-    this.id = location.pathname.split('/listing/')[1] || 1;
+    this.id = location.pathname.split('/reviews/')[1] || 1;
+    console.log(this.id)
   }
 
 
