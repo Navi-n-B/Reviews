@@ -21,7 +21,7 @@ class App extends React.Component {
 
 
   componentDidMount() {
-    fetch(`http://localhost:3001/api/reviews/${this.id}`)
+    fetch(`http://3.12.84.240:3001/api/reviews/${this.id}`)
       .then((res) => {
         return res.json()
       })
@@ -31,7 +31,7 @@ class App extends React.Component {
       .catch((err) => {
         res.status(500)
       })
-    fetch(`http://localhost:3001/api/reviews/scores/${this.id}`)
+    fetch(`http://3.12.84.240:3001/api/reviews/scores/${this.id}`)
       .then((res) => {
         return res.json()
       })
