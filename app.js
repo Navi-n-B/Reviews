@@ -24,6 +24,7 @@ app.use('/dist', express.static(path.join(__dirname, 'dist')));
 
 app.get('/api/reviews/:listingId', (req, res) => {
 	var listingId = req.params.listingId;
+	console.log(21, listingId)
 	seqDb.query(`SELECT *,
 	reviews.id AS reviewId, reviews.date AS reviewDate,
 
